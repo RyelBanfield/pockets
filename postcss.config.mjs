@@ -3,7 +3,40 @@ const config = {
   theme: {
     extend: {
       colors: {
-        // Pockets custom color palette
+        // Reference CSS variables for semantic colors
+        primary: "var(--primary)",
+        "primary-foreground": "var(--primary-foreground)",
+        secondary: "var(--secondary)",
+        "secondary-foreground": "var(--secondary-foreground)",
+        accent: "var(--accent)",
+        "accent-foreground": "var(--accent-foreground)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        card: "var(--card)",
+        "card-foreground": "var(--card-foreground)",
+        popover: "var(--popover)",
+        "popover-foreground": "var(--popover-foreground)",
+        muted: "var(--muted)",
+        "muted-foreground": "var(--muted-foreground)",
+        destructive: "var(--destructive)",
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        // Chart and sidebar colors
+        "chart-1": "var(--chart-1)",
+        "chart-2": "var(--chart-2)",
+        "chart-3": "var(--chart-3)",
+        "chart-4": "var(--chart-4)",
+        "chart-5": "var(--chart-5)",
+        sidebar: "var(--sidebar)",
+        "sidebar-foreground": "var(--sidebar-foreground)",
+        "sidebar-primary": "var(--sidebar-primary)",
+        "sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+        "sidebar-accent": "var(--sidebar-accent)",
+        "sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+        "sidebar-border": "var(--sidebar-border)",
+        "sidebar-ring": "var(--sidebar-ring)",
+        // You can still keep your palette for direct use if needed
         eggshell: {
           DEFAULT: "#f4f1de",
           100: "#463f17",
@@ -64,34 +97,6 @@ const config = {
           800: "#faead1",
           900: "#fcf5e8",
         },
-        // Semantic colors using the custom palette
-        primary: {
-          DEFAULT: "#3d405b", // delft_blue
-          dark: "#252737", // delft_blue-300
-        },
-        secondary: {
-          DEFAULT: "#81b29a", // cambridge_blue
-          dark: "#5d987b", // cambridge_blue-400
-        },
-        accent: {
-          DEFAULT: "#e07a5f", // burnt_sienna
-          dark: "#d7502b", // burnt_sienna-400
-        },
-        background: {
-          light: "#f4f1de", // eggshell
-          dark: "#0c0d12", // delft_blue-100
-        },
-        surface: {
-          light: "#fdfcf8", // eggshell-900
-          dark: "#181a25", // delft_blue-200
-        },
-        foreground: {
-          light: "#3d405b", // delft_blue
-          dark: "#f4f1de", // eggshell
-        },
-        warning: "#f2cc8f", // sunset
-        info: "#81b29a", // cambridge_blue
-        error: "#e07a5f", // burnt_sienna
       },
     },
   },

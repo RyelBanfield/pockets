@@ -395,7 +395,6 @@ function SignOutButton({ onClose }: { onClose?: () => void }) {
   if (isAuthenticated) {
     return (
       <Button
-        variant="destructive"
         className="w-full mt-2"
         onClick={() => {
           signOut();
@@ -407,7 +406,7 @@ function SignOutButton({ onClose }: { onClose?: () => void }) {
     );
   }
   return (
-    <Button variant="default" className="w-full mt-2" asChild>
+    <Button className="w-full mt-2" asChild>
       <Link href="/signin" onClick={onClose}>
         Sign in
       </Link>
