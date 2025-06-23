@@ -204,7 +204,7 @@ function MobileMenu({
               damping: 30,
               duration: 0.4,
             }}
-            className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-background shadow-2xl z-50 flex flex-col"
+            className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-background shadow-2xl z-50 flex flex-col overflow-hidden"
             role="navigation"
             aria-label="Mobile menu"
           >
@@ -239,7 +239,7 @@ function MobileMenu({
             </div>
 
             {/* Navigation Links */}
-            <div className="flex-1 py-6 px-6 safe-area-inset-bottom">
+            <div className="flex-1 py-6 px-6 safe-area-inset-bottom overflow-y-auto overscroll-contain">
               <motion.div
                 initial="closed"
                 animate="open"
@@ -257,27 +257,30 @@ function MobileMenu({
                     },
                   },
                 }}
-                className="space-y-2"
+                className="space-y-2 min-h-0 pb-40"
               >
                 <MobileNavLinks onClose={onClose} />
               </motion.div>
-
-              {/* Theme Toggle in Menu */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.3 }}
-                className="mt-8 pt-6 border-t border-border dark:border-border-dark"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm font-medium text-foreground dark:text-foreground-dark">
-                    Theme
-                  </span>
-                  <ThemeToggle />
-                </div>
-                <SignOutButton onClose={onClose} />
-              </motion.div>
             </div>
+
+            {/* Gradient fade to hide content behind footer */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/90 to-transparent pointer-events-none z-10"></div>
+
+            {/* Theme Toggle in Menu - Fixed at bottom of panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.3 }}
+              className="absolute bottom-0 left-0 right-0 pt-4 px-6 pb-6 border-t border-border dark:border-border-dark bg-background z-20"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-sm font-medium text-foreground dark:text-foreground-dark">
+                  Theme
+                </span>
+                <ThemeToggle />
+              </div>
+              <SignOutButton onClose={onClose} />
+            </motion.div>
           </motion.div>
         </>
       )}
