@@ -4,7 +4,12 @@ import Link from "next/link";
 import { Heart, Target, Zap } from "lucide-react";
 import { useConvexAuth } from "convex/react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
 import { motion, Variants } from "motion/react";
+import {
+  AnimatedHeroBackground,
+  AnimatedCTAButton,
+} from "@/components/landing-animations";
 
 export default function Home() {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -20,73 +25,49 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
+    <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/5 relative overflow-hidden">
+      <AnimatedHeroBackground />
       {/* Hero Section */}
-      <motion.section
-        className="py-32 px-6 lg:px-8 relative overflow-hidden"
-        initial="hidden"
-        animate="visible"
-        variants={fadeUpVariants}
-      >
-        {/* Enhanced background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <AnimatedCircle
-            className="absolute top-20 left-10 w-32 h-32 bg-primary/8 rounded-full blur-2xl animate-pulse"
-            delay={0.2}
-          />
-          <AnimatedCircle
-            className="absolute top-40 right-20 w-40 h-40 bg-accent/15 rounded-full blur-3xl animate-pulse delay-1000"
-            delay={0.4}
-          />
-          <AnimatedCircle
-            className="absolute bottom-32 left-1/4 w-24 h-24 bg-muted/20 rounded-full blur-xl animate-pulse delay-500"
-            delay={0.6}
-          />
-          <AnimatedCircle
-            className="absolute top-1/2 right-1/4 w-20 h-20 bg-primary/5 rounded-full blur-lg animate-pulse delay-2000"
-            delay={0.8}
-          />
-        </div>
+      <section className="py-32 px-6 lg:px-8 relative">
+        {/* removed overflow-hidden and background */}
+        <AnimatedHeroBackground />
         <motion.div
-          className="max-w-6xl mx-auto text-center relative z-10"
-          variants={fadeUpVariants}
+          className="max-w-5xl mx-auto text-center relative z-10"
           initial="hidden"
           animate="visible"
+          variants={fadeUpVariants}
         >
           <motion.div
             className="inline-block mb-8"
             variants={fadeUpVariants}
             custom={1}
           >
-            <span className="inline-flex items-center gap-3 bg-primary/8 hover:bg-primary/12 text-primary px-6 py-3 rounded-full text-sm font-semibold transition-colors duration-200 border border-primary/20">
-              <Heart className="w-4 h-4 fill-current" />
+            <Badge
+              variant="outline"
+              className="inline-flex items-center gap-2 text-muted-foreground px-3 py-2 bg-muted/30 text-xs font-medium tracking-wide transition-colors duration-200 border-muted-foreground/20 uppercase shadow-sm"
+            >
+              <Heart className="w-3 h-3 fill-current text-primary" />
               Built for couples who dream together
-            </span>
+            </Badge>
           </motion.div>
           <motion.h1
-            className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-foreground mb-8 tracking-tight leading-none"
+            className="font-extrabold text-5xl sm:text-7xl lg:text-8xl mb-6 tracking-tight leading-tight text-foreground drop-shadow-xl"
             variants={fadeUpVariants}
             custom={2}
           >
-            Financial{" "}
-            <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-              harmony
-            </span>
-            <br />
-            <span className="text-4xl md:text-5xl lg:text-6xl font-medium text-muted-foreground">
-              starts here
+            <span
+              className="block text-primary text-opacity-95 leading-none"
+              style={{ letterSpacing: "-0.04em" }}
+            >
+              Financial Harmony
             </span>
           </motion.h1>
           <motion.p
-            className="text-xl md:text-2xl text-muted-foreground mb-16 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-16 max-w-2xl mx-auto leading-relaxed font-medium"
             variants={fadeUpVariants}
             custom={3}
           >
             Transform how you and your partner manage money together.
-            <br />
-            <span className="font-semibold text-foreground mt-2 block">
-              See everything, plan everything, achieve everything — as one.
-            </span>
           </motion.p>
           <motion.div
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
@@ -96,36 +77,30 @@ export default function Home() {
             {isLoading ? (
               <Skeleton className="h-[60px] w-[220px] rounded-2xl" />
             ) : isAuthenticated ? (
-              <Link
-                href="/dashboard"
-                className="group bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-5 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl shadow-primary/20 border border-primary/20"
-              >
-                <span className="flex items-center justify-center gap-3">
+              <AnimatedCTAButton href="/dashboard">
+                <span className="flex items-center justify-center gap-3 text-lg font-semibold tracking-wide">
                   Go to Dashboard
                   <span className="group-hover:translate-x-1 transition-transform duration-200 text-xl">
                     →
                   </span>
                 </span>
-              </Link>
+              </AnimatedCTAButton>
             ) : (
-              <Link
-                href="/signin"
-                className="group bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-5 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl shadow-primary/20 border border-primary/20"
-              >
-                <span className="flex items-center justify-center gap-3">
+              <AnimatedCTAButton href="/signin">
+                <span className="flex items-center justify-center gap-3 text-lg font-semibold tracking-wide">
                   Start Our Journey
                   <span className="group-hover:translate-x-1 transition-transform duration-200 text-xl">
                     →
                   </span>
                 </span>
-              </Link>
+              </AnimatedCTAButton>
             )}
           </motion.div>
         </motion.div>
-      </motion.section>
+      </section>
       {/* Features Section */}
       <motion.section
-        className="py-32 px-6 lg:px-8 bg-gradient-to-r from-muted/20 via-background to-muted/20 relative"
+        className="py-32 px-6 lg:px-8 relative"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -138,8 +113,8 @@ export default function Home() {
               variants={fadeUpVariants}
               custom={1}
             >
-              <span className="inline-flex items-center gap-2 bg-accent/80 text-accent-foreground px-4 py-2 rounded-full text-sm font-semibold">
-                <Target className="w-4 h-4" />
+              <span className="inline-flex items-center gap-2 bg-muted/60 text-muted-foreground px-4 py-2 rounded-full text-sm font-semibold border border-muted-foreground/10">
+                <Target className="w-4 h-4 text-primary" />
                 Three pillars of financial partnership
               </span>
             </motion.div>
@@ -149,7 +124,7 @@ export default function Home() {
               custom={2}
             >
               Why couples choose{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
                 Pockets
               </span>
             </motion.h2>
@@ -183,44 +158,25 @@ export default function Home() {
             />
           </div>
         </div>
-        {/* Enhanced decorative elements */}
-        <AnimatedCircle
-          className="absolute top-20 left-10 w-8 h-8 bg-primary/15 rounded-full"
-          delay={0.2}
-        />
-        <AnimatedCircle
-          className="absolute bottom-20 right-10 w-12 h-12 bg-accent/20 rounded-full"
-          delay={0.4}
-        />
-        <AnimatedCircle
-          className="absolute top-1/2 left-1/4 w-6 h-6 bg-muted/30 rounded-full"
-          delay={0.6}
-        />
-        <AnimatedCircle
-          className="absolute top-1/3 right-1/3 w-4 h-4 bg-primary/10 rounded-full"
-          delay={0.8}
-        />
       </motion.section>
       {/* CTA Section */}
       <motion.section
-        className="py-32 px-6 lg:px-8 relative overflow-hidden"
+        className="py-32 px-6 lg:px-8 relative"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeUpVariants}
       >
-        {/* Enhanced background pattern */}
-        <div className="absolute inset-0 opacity-[0.03]">
+        {/* Subtle background pattern - unified with the main gradient */}
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 text-muted-foreground"
             style={{
               backgroundImage: `radial-gradient(circle at 30px 30px, currentColor 2px, transparent 0)`,
               backgroundSize: "60px 60px",
             }}
           ></div>
         </div>
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5"></div>
         <motion.div
           className="max-w-4xl mx-auto text-center relative z-10"
           variants={fadeUpVariants}
@@ -231,8 +187,8 @@ export default function Home() {
             custom={1}
           >
             <div className="text-6xl mb-4">💝</div>
-            <span className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 to-accent/10 text-foreground px-6 py-3 rounded-full text-sm font-semibold border border-primary/20">
-              <Zap className="w-4 h-4" />
+            <span className="inline-flex items-center gap-2 bg-muted/30 text-muted-foreground px-6 py-3 rounded-full text-sm font-semibold border border-muted-foreground/10">
+              <Zap className="w-4 h-4 text-primary" />
               Ready to transform your financial future?
             </span>
           </motion.div>
@@ -242,7 +198,7 @@ export default function Home() {
             custom={2}
           >
             Your financial journey{" "}
-            <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               begins today
             </span>
           </motion.h2>
@@ -263,17 +219,14 @@ export default function Home() {
             variants={fadeUpVariants}
             custom={4}
           >
-            <Link
-              href="/signin"
-              className="group inline-block bg-gradient-to-r from-primary via-primary/90 to-primary/80 hover:from-primary/95 hover:via-primary/85 hover:to-primary/75 text-primary-foreground px-12 py-6 rounded-2xl font-bold text-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl shadow-primary/20 border border-primary/20"
-            >
+            <AnimatedCTAButton href="/signin">
               <span className="flex items-center justify-center gap-3">
                 Start Building Together
                 <span className="group-hover:translate-x-1 transition-transform duration-200 text-2xl">
                   →
                 </span>
               </span>
-            </Link>
+            </AnimatedCTAButton>
             <div className="text-sm text-muted-foreground">
               <div className="flex items-center gap-2 justify-center">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -329,29 +282,23 @@ function FeatureCard({
   };
   return (
     <motion.div
-      className="group bg-card/50 backdrop-blur-sm border border-border/50 rounded-3xl p-10 text-center hover:shadow-2xl hover:shadow-primary/8 transition-all duration-500 hover:scale-[1.02] hover:border-primary/30 hover:bg-card/80"
+      className="bg-background/80 backdrop-blur-sm border border-muted/30 rounded-3xl p-6 text-center transition-all duration-500"
       variants={cardVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       custom={index}
-      whileHover={{
-        scale: 1.04,
-        boxShadow: "0 8px 32px 0 rgba(80, 70, 255, 0.10)",
-      }}
     >
-      <div className="text-primary mb-6 group-hover:scale-110 transition-transform duration-300 flex justify-center">
-        <div className="p-4 bg-primary/10 rounded-2xl group-hover:bg-primary/15 transition-colors">
-          {icon}
-        </div>
+      <div className="text-primary mb-4 flex justify-center">
+        <div className="p-3 bg-muted/20 rounded-2xl">{icon}</div>
       </div>
-      <h3 className="text-2xl font-bold text-foreground mb-2">{title}</h3>
+      <h3 className="text-xl font-bold text-foreground mb-1">{title}</h3>
       {subtitle && (
-        <p className="text-sm font-semibold text-primary mb-4 uppercase tracking-wide">
+        <p className="text-xs font-semibold text-primary mb-3 uppercase tracking-wide">
           {subtitle}
         </p>
       )}
-      <p className="text-muted-foreground leading-relaxed text-lg">
+      <p className="text-muted-foreground leading-relaxed text-base">
         {description}
       </p>
     </motion.div>
