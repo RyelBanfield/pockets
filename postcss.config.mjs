@@ -3,29 +3,95 @@ const config = {
   theme: {
     extend: {
       colors: {
+        // Pockets custom color palette
+        eggshell: {
+          DEFAULT: "#f4f1de",
+          100: "#463f17",
+          200: "#8b7f2e",
+          300: "#c5b651",
+          400: "#dcd397",
+          500: "#f4f1de",
+          600: "#f6f3e3",
+          700: "#f8f6ea",
+          800: "#faf9f1",
+          900: "#fdfcf8",
+        },
+        burnt_sienna: {
+          DEFAULT: "#e07a5f",
+          100: "#36140a",
+          200: "#6c2715",
+          300: "#a23b1f",
+          400: "#d7502b",
+          500: "#e07a5f",
+          600: "#e79680",
+          700: "#edb1a0",
+          800: "#f3cbc0",
+          900: "#f9e5df",
+        },
+        delft_blue: {
+          DEFAULT: "#3d405b",
+          100: "#0c0d12",
+          200: "#181a25",
+          300: "#252737",
+          400: "#313349",
+          500: "#3d405b",
+          600: "#5a5e87",
+          700: "#7e83a9",
+          800: "#a9acc6",
+          900: "#d4d6e2",
+        },
+        cambridge_blue: {
+          DEFAULT: "#81b29a",
+          100: "#17261f",
+          200: "#2f4c3e",
+          300: "#46725d",
+          400: "#5d987b",
+          500: "#81b29a",
+          600: "#9ac1ae",
+          700: "#b3d0c2",
+          800: "#cce0d7",
+          900: "#e6efeb",
+        },
+        sunset: {
+          DEFAULT: "#f2cc8f",
+          100: "#442d08",
+          200: "#895b10",
+          300: "#cd8818",
+          400: "#eaac48",
+          500: "#f2cc8f",
+          600: "#f4d5a4",
+          700: "#f7e0bb",
+          800: "#faead1",
+          900: "#fcf5e8",
+        },
+        // Semantic colors using the custom palette
         primary: {
-          DEFAULT: "#6366F1", // Indigo-500
-          dark: "#4F46E5", // Indigo-600
+          DEFAULT: "#3d405b", // delft_blue
+          dark: "#252737", // delft_blue-300
         },
         secondary: {
-          DEFAULT: "#10B981", // Emerald-500
-          dark: "#059669", // Emerald-600
+          DEFAULT: "#81b29a", // cambridge_blue
+          dark: "#5d987b", // cambridge_blue-400
+        },
+        accent: {
+          DEFAULT: "#e07a5f", // burnt_sienna
+          dark: "#d7502b", // burnt_sienna-400
         },
         background: {
-          light: "#F8FAFC", // Slate-50
-          dark: "#0F172A", // Slate-900
+          light: "#f4f1de", // eggshell
+          dark: "#0c0d12", // delft_blue-100
         },
         surface: {
-          light: "#FFFFFF",
-          dark: "#1E293B", // Slate-800
+          light: "#fdfcf8", // eggshell-900
+          dark: "#181a25", // delft_blue-200
         },
         foreground: {
-          light: "#1E293B", // Slate-800
-          dark: "#F1F5F9", // Slate-100
+          light: "#3d405b", // delft_blue
+          dark: "#f4f1de", // eggshell
         },
-        error: "#F43F5E", // Rose-500
-        warning: "#F59E42", // Amber-400
-        info: "#0EA5E9", // Sky-500
+        warning: "#f2cc8f", // sunset
+        info: "#81b29a", // cambridge_blue
+        error: "#e07a5f", // burnt_sienna
       },
     },
   },

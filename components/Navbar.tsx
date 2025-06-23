@@ -47,17 +47,17 @@ export default function Navbar() {
   };
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 bg-background/95 dark:bg-background-dark/95 backdrop-blur-xl border-b border-border dark:border-border-dark shadow-sm">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-background/95 backdrop-blur-xl border-b border-border shadow-sm">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only absolute left-2 top-2 bg-primary text-white rounded px-2 py-1 z-50"
+          className="sr-only focus:not-sr-only absolute left-2 top-2 bg-primary text-primary-foreground rounded px-2 py-1 z-50"
         >
           Skip to main content
         </a>
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
           <Link
             href="/"
-            className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-lg p-1"
+            className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-lg p-1"
           >
             <Image
               src="/convex.svg"
@@ -65,9 +65,7 @@ export default function Navbar() {
               width={32}
               height={32}
             />
-            <span className="font-bold text-xl text-foreground dark:text-foreground-dark">
-              Pockets
-            </span>
+            <span className="font-bold text-xl text-foreground">Pockets</span>
           </Link>
 
           {/* Desktop navigation */}
@@ -98,7 +96,7 @@ export default function Navbar() {
 
 function NavLinks() {
   const linkClass =
-    "font-medium px-4 py-2 text-foreground dark:text-foreground-dark hover:text-primary focus:text-primary transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark rounded-lg hover:bg-muted dark:hover:bg-muted-dark";
+    "font-medium px-4 py-2 text-foreground hover:text-primary focus:text-primary transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-lg hover:bg-muted";
 
   const links = [
     { href: "/", label: "Dashboard", icon: "📊" },
@@ -134,7 +132,7 @@ function HamburgerButton({
   return (
     <button
       onClick={onClick}
-      className="relative w-11 h-11 flex items-center justify-center rounded-lg hover:bg-muted dark:hover:bg-muted-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      className="relative w-11 h-11 flex items-center justify-center rounded-lg hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
       {...props}
     >
       <div className="w-6 h-6 flex flex-col items-center justify-center">
@@ -144,7 +142,7 @@ function HamburgerButton({
             y: isOpen ? 0 : -4,
           }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
-          className="absolute block h-0.5 w-6 bg-foreground dark:bg-foreground-dark rounded-full"
+          className="absolute block h-0.5 w-6 bg-foreground rounded-full"
           style={{ transformOrigin: "center center" }}
         />
         <motion.span
@@ -153,7 +151,7 @@ function HamburgerButton({
             x: isOpen ? -10 : 0,
           }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
-          className="absolute block h-0.5 w-6 bg-foreground dark:bg-foreground-dark rounded-full"
+          className="absolute block h-0.5 w-6 bg-foreground rounded-full"
         />
         <motion.span
           animate={{
@@ -161,7 +159,7 @@ function HamburgerButton({
             y: isOpen ? 0 : 4,
           }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
-          className="absolute block h-0.5 w-6 bg-foreground dark:bg-foreground-dark rounded-full"
+          className="absolute block h-0.5 w-6 bg-foreground rounded-full"
           style={{ transformOrigin: "center center" }}
         />
       </div>
@@ -205,26 +203,26 @@ function MobileMenu({
               damping: 30,
               duration: 0.4,
             }}
-            className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-background dark:bg-background-dark shadow-2xl z-50 flex flex-col"
+            className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-background shadow-2xl z-50 flex flex-col"
             role="navigation"
             aria-label="Mobile menu"
           >
             {/* Menu Header */}
-            <div className="flex items-center justify-between p-6 border-b border-border dark:border-border-dark">
+            <div className="flex items-center justify-between p-6 border-b border-border">
               <div className="flex items-center gap-2">
                 <Image src="/convex.svg" alt="Pockets" width={24} height={24} />
-                <span className="font-semibold text-lg text-foreground dark:text-foreground-dark">
+                <span className="font-semibold text-lg text-foreground">
                   Menu
                 </span>
               </div>
               <button
                 onClick={onClose}
-                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-muted dark:hover:bg-muted-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring"
                 aria-label="Close menu"
               >
                 <span className="sr-only">Close menu</span>
                 <svg
-                  className="w-5 h-5 text-muted-foreground dark:text-muted-foreground-dark"
+                  className="w-5 h-5 text-muted-foreground"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -352,23 +350,23 @@ function MobileNavLinks({ onClose }: { onClose: () => void }) {
           <Link
             href={link.href}
             onClick={onClose}
-            className="group flex items-center gap-4 py-3 rounded-xl hover:bg-muted dark:hover:bg-muted-dark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 min-h-[48px]"
+            className="group flex items-center gap-4 py-3 rounded-xl hover:bg-muted transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[48px]"
           >
-            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-primary/20 dark:from-primary-dark/10 dark:to-primary-dark/20 group-hover:from-primary/20 group-hover:to-primary/30 dark:group-hover:from-primary-dark/20 dark:group-hover:to-primary-dark/30 transition-all duration-200">
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-primary/20 group-hover:from-primary/20 group-hover:to-primary/30 transition-all duration-200">
               <span className="text-lg" role="img" aria-hidden="true">
                 {link.icon}
               </span>
             </div>
             <div className="flex-1">
-              <div className="font-semibold text-foreground dark:text-foreground-dark group-hover:text-primary dark:group-hover:text-primary-dark transition-colors">
+              <div className="font-semibold text-foreground group-hover:text-primary transition-colors">
                 {link.label}
               </div>
-              <div className="text-sm text-muted-foreground dark:text-muted-foreground-dark mt-0.5">
+              <div className="text-sm text-muted-foreground mt-0.5">
                 {link.description}
               </div>
             </div>
             <svg
-              className="w-5 h-5 text-gray-400 group-hover:text-indigo-500 transition-colors"
+              className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

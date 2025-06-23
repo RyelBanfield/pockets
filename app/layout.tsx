@@ -36,7 +36,7 @@ export default function RootLayout({
       <ConvexClientProvider>
         <html lang="en" suppressHydrationWarning>
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-gradient-to-br from-background-light to-primary/10 dark:from-background-dark dark:to-primary-dark/20`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-gradient-to-br from-background to-eggshell-700/20 dark:from-background dark:to-delft_blue-600/10`}
           >
             <ThemeProvider
               attribute="class"
