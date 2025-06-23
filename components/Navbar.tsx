@@ -130,7 +130,8 @@ function HamburgerButton({
   onClick: () => void;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button
+    <Button
+      variant={"outline"}
       onClick={onClick}
       className="relative w-11 h-11 flex items-center justify-center rounded-lg hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
       {...props}
@@ -139,31 +140,31 @@ function HamburgerButton({
         <motion.span
           animate={{
             rotate: isOpen ? 45 : 0,
-            y: isOpen ? 0 : -4,
+            y: isOpen ? 0 : -5,
           }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
-          className="absolute block h-0.5 w-6 bg-foreground rounded-full"
+          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+          className="absolute block h-0.5 w-5 bg-foreground rounded-full"
           style={{ transformOrigin: "center center" }}
         />
         <motion.span
           animate={{
             opacity: isOpen ? 0 : 1,
-            x: isOpen ? -10 : 0,
+            scale: isOpen ? 0.8 : 1,
           }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
-          className="absolute block h-0.5 w-6 bg-foreground rounded-full"
+          className="absolute block h-0.5 w-5 bg-foreground rounded-full"
         />
         <motion.span
           animate={{
             rotate: isOpen ? -45 : 0,
-            y: isOpen ? 0 : 4,
+            y: isOpen ? 0 : 5,
           }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
-          className="absolute block h-0.5 w-6 bg-foreground rounded-full"
+          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+          className="absolute block h-0.5 w-5 bg-foreground rounded-full"
           style={{ transformOrigin: "center center" }}
         />
       </div>
-    </button>
+    </Button>
   );
 }
 

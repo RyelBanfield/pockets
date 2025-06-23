@@ -3,6 +3,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { Button } from "./ui/button";
 
 /**
  * ThemeToggle renders a button to toggle between light and dark mode, with animation.
@@ -14,9 +15,11 @@ export default function ThemeToggle() {
   if (!mounted) return null;
   const isDark = resolvedTheme === "dark";
   return (
-    <button
+    <Button
+      variant="outline"
+      size="icon"
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="ml-2 p-2 rounded-full bg-surface-light dark:bg-surface-dark border border-primary/20 dark:border-primary-dark/30 hover:bg-primary/10 dark:hover:bg-primary-dark/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+      className="w-11 h-11 rounded-lg hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       type="button"
     >
@@ -36,7 +39,7 @@ export default function ThemeToggle() {
               }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              <Sun className="w-5 h-5 text-primary" />
+              <Sun className="w-5 h-5 text-foreground" />
             </motion.span>
           ) : (
             <motion.span
@@ -52,11 +55,11 @@ export default function ThemeToggle() {
               }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              <Moon className="w-5 h-5 text-primary" />
+              <Moon className="w-5 h-5 text-foreground" />
             </motion.span>
           )}
         </AnimatePresence>
       </span>
-    </button>
+    </Button>
   );
 }
