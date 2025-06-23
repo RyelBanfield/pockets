@@ -2,18 +2,43 @@
 
 import Image from "next/image";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { useConvexAuth } from "convex/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function SignIn() {
   const { signIn } = useAuthActions();
-  // fallback: check for userId in localStorage or similar if no session hook is available
+  const { isAuthenticated, isLoading } = useConvexAuth();
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  // TODO: Replace with actual session check from Convex Auth when available
-  // For now, skip redirect logic if no session hook is available
+  // Redirect to home if already authenticated
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="flex-1 flex flex-col justify-center items-center pt-24">
+        <div className="w-full max-w-md p-8 flex flex-col gap-8 items-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <p className="text-foreground-light dark:text-foreground-dark">
+            Loading...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render sign-in form if already authenticated
+  if (isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="flex-1 flex flex-col justify-center items-center pt-24">
@@ -78,25 +103,23 @@ export default function SignIn() {
               }
             />
           </label>
-          <button
-            className="mt-2 bg-primary hover:bg-primary-dark text-white font-semibold rounded-md py-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-            type="submit"
-          >
+          <Button variant={"outline"} className="w-full mt-4" type="submit">
             {flow === "signIn" ? "Sign in" : "Sign up"}
-          </button>
+          </Button>
           <div className="flex flex-row gap-2 justify-center text-sm mt-2">
             <span className="text-foreground-light dark:text-foreground-dark">
               {flow === "signIn"
                 ? "Don't have an account?"
                 : "Already have an account?"}
             </span>
-            <button
+            <Button
               type="button"
-              className="text-primary hover:underline font-medium focus:outline-none"
+              variant="link"
+              className="text-primary hover:underline font-medium p-0 h-auto"
               onClick={() => setFlow(flow === "signIn" ? "signUp" : "signIn")}
             >
               {flow === "signIn" ? "Sign up instead" : "Sign in instead"}
-            </button>
+            </Button>
           </div>
           {error && (
             <div className="bg-error/10 border-2 border-error/30 rounded-md p-2 mt-2">
