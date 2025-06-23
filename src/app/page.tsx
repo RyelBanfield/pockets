@@ -78,7 +78,7 @@ export default function Home() {
               <Skeleton className="h-[60px] w-[220px] rounded-2xl" />
             ) : isAuthenticated ? (
               <AnimatedCTAButton href="/dashboard">
-                <span className="flex items-center justify-center gap-3 text-lg font-semibold tracking-wide">
+                <span className="flex items-center justify-center gap-3">
                   Go to Dashboard
                   <span className="text-xl transition-transform duration-200 group-hover:translate-x-1">
                     →
@@ -87,7 +87,7 @@ export default function Home() {
               </AnimatedCTAButton>
             ) : (
               <AnimatedCTAButton href="/signin">
-                <span className="flex items-center justify-center gap-3 text-lg font-semibold tracking-wide">
+                <span className="flex items-center justify-center gap-3">
                   Start Our Journey
                   <span className="text-xl transition-transform duration-200 group-hover:translate-x-1">
                     →

@@ -75,11 +75,16 @@ export function AnimatedCTAButton({
       target={props.target}
       rel={props.rel}
       className={
-        "group bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20 border-primary/20 rounded-2xl border px-10 py-5 text-lg font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl " +
+        "group bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20 border-primary/20 [&_*]:!text-primary-foreground inline-flex items-center justify-center rounded-2xl border px-10 py-5 text-lg font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl " +
         (className || "")
       }
+      style={
+        {
+          color: "var(--primary-foreground)",
+        } as React.CSSProperties
+      }
     >
-      {children}
+      <div style={{ color: "inherit" }}>{children}</div>
       <span className="group-active:animate-ripple pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-active:opacity-30" />
     </motion.a>
   );
