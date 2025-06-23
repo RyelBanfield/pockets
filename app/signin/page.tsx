@@ -1,22 +1,30 @@
 "use client";
 
+import Image from "next/image";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function SignIn() {
   const { signIn } = useAuthActions();
+  // fallback: check for userId in localStorage or similar if no session hook is available
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
+  // TODO: Replace with actual session check from Convex Auth when available
+  // For now, skip redirect logic if no session hook is available
+
   return (
     <div className="flex-1 flex flex-col justify-center items-center pt-24">
       <div className="w-full max-w-md p-8 flex flex-col gap-8">
         <div className="flex flex-col items-center gap-2">
-          <img
+          <Image
             src="/convex.svg"
             alt="Pockets Logo"
-            className="h-12 w-12 mb-2"
+            width={48}
+            height={48}
+            className="mb-2"
           />
           <h1 className="text-3xl font-bold text-foreground-light dark:text-foreground-dark">
             Pockets

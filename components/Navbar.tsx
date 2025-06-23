@@ -5,6 +5,9 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useAuthActions } from "@convex-dev/auth/react";
+import { useConvexAuth } from "convex/react";
+import { Button } from "@/components/ui/button";
 
 /**
  * Responsive navigation bar for Pockets with animated hamburger menu.
@@ -267,12 +270,13 @@ function MobileMenu({
                 transition={{ delay: 0.6, duration: 0.3 }}
                 className="mt-8 pt-6 border-t border-border dark:border-border-dark"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-4">
                   <span className="text-sm font-medium text-foreground dark:text-foreground-dark">
                     Theme
                   </span>
                   <ThemeToggle />
                 </div>
+                <SignOutButton onClose={onClose} />
               </motion.div>
             </div>
           </motion.div>
@@ -348,7 +352,7 @@ function MobileNavLinks({ onClose }: { onClose: () => void }) {
           <Link
             href={link.href}
             onClick={onClose}
-            className="group flex items-center gap-4 p-4 rounded-xl hover:bg-muted dark:hover:bg-muted-dark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 min-h-[48px]"
+            className="group flex items-center gap-4 py-3 rounded-xl hover:bg-muted dark:hover:bg-muted-dark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 min-h-[48px]"
           >
             <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-primary/20 dark:from-primary-dark/10 dark:to-primary-dark/20 group-hover:from-primary/20 group-hover:to-primary/30 dark:group-hover:from-primary-dark/20 dark:group-hover:to-primary-dark/30 transition-all duration-200">
               <span className="text-lg" role="img" aria-hidden="true">
@@ -380,5 +384,31 @@ function MobileNavLinks({ onClose }: { onClose: () => void }) {
         </motion.div>
       ))}
     </>
+  );
+}
+
+function SignOutButton({ onClose }: { onClose?: () => void }) {
+  const { signOut } = useAuthActions();
+  const { isAuthenticated } = useConvexAuth();
+  if (isAuthenticated) {
+    return (
+      <Button
+        variant="destructive"
+        className="w-full mt-2"
+        onClick={() => {
+          signOut();
+          onClose?.();
+        }}
+      >
+        Sign out
+      </Button>
+    );
+  }
+  return (
+    <Button variant="default" className="w-full mt-2" asChild>
+      <Link href="/signin" onClick={onClose}>
+        Sign in
+      </Link>
+    </Button>
   );
 }

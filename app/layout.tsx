@@ -33,28 +33,28 @@ export default function RootLayout({
 }>) {
   return (
     <ConvexAuthNextjsServerProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-gradient-to-br from-background-light to-primary/10 dark:from-background-dark dark:to-primary-dark/20`}
-        >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
+      <ConvexClientProvider>
+        <html lang="en" suppressHydrationWarning>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-gradient-to-br from-background-light to-primary/10 dark:from-background-dark dark:to-primary-dark/20`}
           >
-            <header className="sticky top-0 z-50">
-              <Navbar />
-            </header>
-            <main className="flex-grow flex-shrink-0 pt-20">
-              <ConvexClientProvider>{children}</ConvexClientProvider>
-            </main>
-            <footer className="mt-auto">
-              <Footer />
-            </footer>
-          </ThemeProvider>
-        </body>
-      </html>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <header className="sticky top-0 z-50">
+                <Navbar />
+              </header>
+              <main className="flex-grow flex-shrink-0 pt-20">{children}</main>
+              <footer className="mt-auto">
+                <Footer />
+              </footer>
+            </ThemeProvider>
+          </body>
+        </html>
+      </ConvexClientProvider>
     </ConvexAuthNextjsServerProvider>
   );
 }
