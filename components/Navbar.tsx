@@ -99,7 +99,7 @@ function NavLinks() {
     "font-medium px-4 py-2 text-foreground hover:text-primary focus:text-primary transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-lg hover:bg-muted";
 
   const links = [
-    { href: "/", label: "Dashboard", icon: "📊" },
+    { href: "/dashboard", label: "Dashboard", icon: "📊" },
     { href: "/transactions", label: "Transactions", icon: "💳" },
     { href: "/goals", label: "Goals", icon: "🎯" },
     { href: "/insights", label: "Insights", icon: "📈" },
@@ -295,7 +295,7 @@ function MobileMenu({
 function MobileNavLinks({ onClose }: { onClose: () => void }) {
   const links = [
     {
-      href: "/",
+      href: "/dashboard",
       label: "Dashboard",
       icon: "📊",
       description: "Your financial overview",
@@ -354,7 +354,7 @@ function MobileNavLinks({ onClose }: { onClose: () => void }) {
           <Link
             href={link.href}
             onClick={onClose}
-            className="group flex items-center gap-4 py-3 rounded-xl hover:bg-muted transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[48px]"
+            className="group flex items-center gap-4 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[48px] hover:bg-muted hover:px-4 hover:-mx-2"
           >
             <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-primary/20 group-hover:from-primary/20 group-hover:to-primary/30 transition-all duration-200">
               <span className="text-lg" role="img" aria-hidden="true">
