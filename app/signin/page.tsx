@@ -10,8 +10,8 @@ export default function SignIn() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-background-light to-primary/10 dark:from-background-dark dark:to-primary-dark/20">
-      <div className="w-full max-w-md p-8 bg-surface-light dark:bg-surface-dark rounded-2xl shadow-xl flex flex-col gap-8">
+    <div className="flex-1 flex flex-col justify-center items-center pt-24">
+      <div className="w-full max-w-md p-8 flex flex-col gap-8">
         <div className="flex flex-col items-center gap-2">
           <img
             src="/convex.svg"

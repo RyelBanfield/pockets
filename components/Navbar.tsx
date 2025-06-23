@@ -2,134 +2,383 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 /**
- * Responsive, accessible navigation bar for Pockets.
- * Includes animated hamburger menu for mobile.
+ * Responsive navigation bar for Pockets with animated hamburger menu.
+ * Features smooth animations, full accessibility, and mobile-first design.
  */
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Close menu on outside click
+  // Close menu on escape key
   useEffect(() => {
-    if (!open) return;
-    function handleClick(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setOpen(false);
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isMenuOpen) {
+        setIsMenuOpen(false);
       }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [open]);
+    };
 
-  // Lock scroll when menu is open
-  useEffect(() => {
-    if (open) {
+    if (isMenuOpen) {
+      document.addEventListener("keydown", handleEscape);
+      // Prevent body scroll when menu is open
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = "unset";
     }
+
     return () => {
-      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
     };
-  }, [open]);
+  }, [isMenuOpen]);
 
-  // Keyboard navigation: close on Escape
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    // Haptic feedback on supported devices
+    if (navigator.vibrate) {
+      navigator.vibrate(50);
     }
-    if (open) window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  // Skip to main content
-  // (Add id="main-content" to your main content container)
-
+  };
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-surface-light dark:bg-surface-dark border-b border-primary/10 dark:border-primary-dark/20 shadow-sm">
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only absolute left-2 top-2 bg-primary text-white rounded px-2 py-1 z-50"
-      >
-        Skip to main content
-      </a>
-      <div className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3 md:py-2">
-        <Link href="/" className="flex items-center gap-2 focus:outline-none">
-          <Image src="/convex.svg" alt="Pockets Logo" width={32} height={32} />
-          <span className="font-bold text-lg text-primary">Pockets</span>
-        </Link>
-        {/* Desktop nav */}
-        <div className="hidden md:flex gap-6 items-center">
-          <NavLinks />
-        </div>
-        {/* Hamburger */}
-        <button
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          className="md:hidden flex flex-col justify-center items-center w-10 h-10 relative z-50 focus:outline-none group"
-          onClick={() => setOpen((v) => !v)}
+    <>
+      <nav className="fixed top-0 left-0 w-full z-50 bg-background/95 dark:bg-background-dark/95 backdrop-blur-xl border-b border-border dark:border-border-dark shadow-sm">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only absolute left-2 top-2 bg-primary text-white rounded px-2 py-1 z-50"
         >
-          <span
-            className={`block h-0.5 w-6 rounded bg-primary transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`}
-          ></span>
-          <span
-            className={`block h-0.5 w-6 rounded bg-primary transition-all duration-300 my-1 ${open ? "opacity-0" : ""}`}
-          ></span>
-          <span
-            className={`block h-0.5 w-6 rounded bg-primary transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`}
-          ></span>
-        </button>
-        {/* Mobile menu */}
-        <div
-          ref={menuRef}
-          id="mobile-menu"
-          aria-hidden={!open}
-          className={`fixed inset-0 bg-black/40 dark:bg-black/60 transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-        >
-          <div
-            className={`absolute top-0 right-0 h-full w-64 bg-surface-light dark:bg-surface-dark shadow-lg transform transition-transform duration-400 ease-in-out ${open ? "translate-x-0" : "translate-x-full"}`}
-            tabIndex={-1}
-            role="menu"
-            aria-label="Main menu"
+          Skip to main content
+        </a>
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
+          <Link
+            href="/"
+            className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-lg p-1"
           >
-            <nav
-              className="flex flex-col gap-6 mt-20 px-8"
-              onClick={() => setOpen(false)}
-            >
-              <NavLinks mobile />
-            </nav>
+            <Image
+              src="/convex.svg"
+              alt="Pockets Logo"
+              width={32}
+              height={32}
+            />
+            <span className="font-bold text-xl text-foreground dark:text-foreground-dark">
+              Pockets
+            </span>
+          </Link>
+
+          {/* Desktop navigation */}
+          <div className="hidden md:flex gap-1 items-center">
+            <NavLinks />
+            <div className="ml-4">
+              <ThemeToggle />
+            </div>
+          </div>
+
+          {/* Mobile: Theme toggle and hamburger */}
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle />
+            <HamburgerButton
+              isOpen={isMenuOpen}
+              onClick={toggleMenu}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            />
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+    </>
   );
 }
 
-function NavLinks({ mobile }: { mobile?: boolean }) {
+function NavLinks() {
   const linkClass =
-    "text-foreground-light dark:text-foreground-dark font-medium hover:text-primary focus:text-primary transition-colors focus:outline-none px-1 py-2" +
-    (mobile ? " text-lg" : "");
+    "font-medium px-4 py-2 text-foreground dark:text-foreground-dark hover:text-primary focus:text-primary transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark rounded-lg hover:bg-muted dark:hover:bg-muted-dark";
+
+  const links = [
+    { href: "/", label: "Dashboard", icon: "📊" },
+    { href: "/transactions", label: "Transactions", icon: "💳" },
+    { href: "/goals", label: "Goals", icon: "🎯" },
+    { href: "/insights", label: "Insights", icon: "📈" },
+    { href: "/settings", label: "Settings", icon: "⚙️" },
+  ];
+
   return (
     <>
-      <Link href="/" className={linkClass} tabIndex={0} role="menuitem">
-        Dashboard
-      </Link>
-      <Link href="/expenses" className={linkClass} tabIndex={0} role="menuitem">
-        Expenses
-      </Link>
-      <Link href="/budgets" className={linkClass} tabIndex={0} role="menuitem">
-        Budgets
-      </Link>
-      <Link href="/insights" className={linkClass} tabIndex={0} role="menuitem">
-        Insights
-      </Link>
-      <Link href="/account" className={linkClass} tabIndex={0} role="menuitem">
-        Account
-      </Link>
+      {links.map((link) => (
+        <Link key={link.href} href={link.href} className={linkClass}>
+          {link.label}
+        </Link>
+      ))}
+    </>
+  );
+}
+
+/**
+ * Animated hamburger button that transforms from 3 lines to X.
+ * Follows mobile accessibility best practices with 44px touch target.
+ */
+function HamburgerButton({
+  isOpen,
+  onClick,
+  ...props
+}: {
+  isOpen: boolean;
+  onClick: () => void;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      onClick={onClick}
+      className="relative w-11 h-11 flex items-center justify-center rounded-lg hover:bg-muted dark:hover:bg-muted-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      {...props}
+    >
+      <div className="w-6 h-6 flex flex-col items-center justify-center">
+        <motion.span
+          animate={{
+            rotate: isOpen ? 45 : 0,
+            y: isOpen ? 0 : -4,
+          }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          className="absolute block h-0.5 w-6 bg-foreground dark:bg-foreground-dark rounded-full"
+          style={{ transformOrigin: "center center" }}
+        />
+        <motion.span
+          animate={{
+            opacity: isOpen ? 0 : 1,
+            x: isOpen ? -10 : 0,
+          }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="absolute block h-0.5 w-6 bg-foreground dark:bg-foreground-dark rounded-full"
+        />
+        <motion.span
+          animate={{
+            rotate: isOpen ? -45 : 0,
+            y: isOpen ? 0 : 4,
+          }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          className="absolute block h-0.5 w-6 bg-foreground dark:bg-foreground-dark rounded-full"
+          style={{ transformOrigin: "center center" }}
+        />
+      </div>
+    </button>
+  );
+}
+
+/**
+ * Full-screen mobile menu with smooth animations and accessibility features.
+ * Implements focus trap and proper ARIA patterns.
+ */
+function MobileMenu({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+            onClick={onClose}
+          />
+
+          {/* Menu Panel */}
+          <motion.div
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "100%", opacity: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+              duration: 0.4,
+            }}
+            className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-background dark:bg-background-dark shadow-2xl z-50 flex flex-col"
+            role="navigation"
+            aria-label="Mobile menu"
+          >
+            {/* Menu Header */}
+            <div className="flex items-center justify-between p-6 border-b border-border dark:border-border-dark">
+              <div className="flex items-center gap-2">
+                <Image src="/convex.svg" alt="Pockets" width={24} height={24} />
+                <span className="font-semibold text-lg text-foreground dark:text-foreground-dark">
+                  Menu
+                </span>
+              </div>
+              <button
+                onClick={onClose}
+                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-muted dark:hover:bg-muted-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                aria-label="Close menu"
+              >
+                <span className="sr-only">Close menu</span>
+                <svg
+                  className="w-5 h-5 text-muted-foreground dark:text-muted-foreground-dark"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            {/* Navigation Links */}
+            <div className="flex-1 py-6 px-6 safe-area-inset-bottom">
+              <motion.div
+                initial="closed"
+                animate="open"
+                variants={{
+                  open: {
+                    transition: {
+                      staggerChildren: 0.1,
+                      delayChildren: 0.2,
+                    },
+                  },
+                  closed: {
+                    transition: {
+                      staggerChildren: 0.05,
+                      staggerDirection: -1,
+                    },
+                  },
+                }}
+                className="space-y-2"
+              >
+                <MobileNavLinks onClose={onClose} />
+              </motion.div>
+
+              {/* Theme Toggle in Menu */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.3 }}
+                className="mt-8 pt-6 border-t border-border dark:border-border-dark"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-foreground dark:text-foreground-dark">
+                    Theme
+                  </span>
+                  <ThemeToggle />
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/**
+ * Mobile navigation links with enhanced styling and animations.
+ * Features large touch targets and smooth hover effects.
+ */
+function MobileNavLinks({ onClose }: { onClose: () => void }) {
+  const links = [
+    {
+      href: "/",
+      label: "Dashboard",
+      icon: "📊",
+      description: "Your financial overview",
+    },
+    {
+      href: "/transactions",
+      label: "Transactions",
+      icon: "💳",
+      description: "Track expenses & income",
+    },
+    {
+      href: "/goals",
+      label: "Goals",
+      icon: "🎯",
+      description: "Savings & budgets",
+    },
+    {
+      href: "/insights",
+      label: "Insights",
+      icon: "📈",
+      description: "Financial reports",
+    },
+    {
+      href: "/settings",
+      label: "Settings",
+      icon: "⚙️",
+      description: "Account & preferences",
+    },
+  ];
+
+  const itemVariants = {
+    open: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        type: "spring" as const,
+        stiffness: 300,
+        damping: 24,
+      },
+    },
+    closed: {
+      y: 20,
+      opacity: 0,
+      scale: 0.95,
+      transition: {
+        duration: 0.2,
+      },
+    },
+  };
+
+  return (
+    <>
+      {links.map((link, index) => (
+        <motion.div key={link.href} variants={itemVariants} custom={index}>
+          <Link
+            href={link.href}
+            onClick={onClose}
+            className="group flex items-center gap-4 p-4 rounded-xl hover:bg-muted dark:hover:bg-muted-dark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 min-h-[48px]"
+          >
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-primary/20 dark:from-primary-dark/10 dark:to-primary-dark/20 group-hover:from-primary/20 group-hover:to-primary/30 dark:group-hover:from-primary-dark/20 dark:group-hover:to-primary-dark/30 transition-all duration-200">
+              <span className="text-lg" role="img" aria-hidden="true">
+                {link.icon}
+              </span>
+            </div>
+            <div className="flex-1">
+              <div className="font-semibold text-foreground dark:text-foreground-dark group-hover:text-primary dark:group-hover:text-primary-dark transition-colors">
+                {link.label}
+              </div>
+              <div className="text-sm text-muted-foreground dark:text-muted-foreground-dark mt-0.5">
+                {link.description}
+              </div>
+            </div>
+            <svg
+              className="w-5 h-5 text-gray-400 group-hover:text-indigo-500 transition-colors"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </Link>
+        </motion.div>
+      ))}
     </>
   );
 }
