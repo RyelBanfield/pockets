@@ -62,14 +62,18 @@ export default function SignIn() {
           onSubmit={(e) => {
             e.preventDefault();
             const formData = new FormData(e.target as HTMLFormElement);
-            formData.set("flow", flow);
-            void signIn("password", formData)
-              .catch((error) => {
-                setError(error.message);
-              })
-              .then(() => {
-                router.push("/");
-              });
+
+            const email = formData.get("email") as string;
+            const password = formData.get("password") as string;
+
+            void signIn("password", {
+              email,
+              password,
+              flow,
+            }).catch((error) => {
+              console.error("Sign-in error:", error);
+              setError(error.message || "An error occurred during sign-in");
+            });
           }}
         >
           <label className="flex flex-col gap-1">
