@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ConvexAuthNextjsServerProvider>
+    <ClerkProvider>
       <ConvexClientProvider>
         <html lang="en" suppressHydrationWarning>
           <body
@@ -57,6 +57,6 @@ export default function RootLayout({
           </body>
         </html>
       </ConvexClientProvider>
-    </ConvexAuthNextjsServerProvider>
+    </ClerkProvider>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useConvexAuth } from "convex/react";
+import { useUser } from "@clerk/nextjs";
 import { Heart, Target, Zap } from "lucide-react";
 import { motion, Variants } from "motion/react";
 
@@ -12,7 +12,7 @@ import { Badge } from "@/src/components/ui/badge";
 import { Skeleton } from "@/src/components/ui/skeleton";
 
 export default function Home() {
-  const { isAuthenticated, isLoading } = useConvexAuth();
+  const { isSignedIn, isLoaded } = useUser();
 
   // Animation variants using best practices
   const fadeUpVariants: Variants = {
@@ -74,9 +74,9 @@ export default function Home() {
             variants={fadeUpVariants}
             custom={4}
           >
-            {isLoading ? (
+            {!isLoaded ? (
               <Skeleton className="h-[60px] w-[220px] rounded-2xl" />
-            ) : isAuthenticated ? (
+            ) : isSignedIn ? (
               <AnimatedCTAButton href="/dashboard">
                 <span className="flex items-center justify-center gap-3">
                   Go to Dashboard
@@ -219,9 +219,9 @@ export default function Home() {
             variants={fadeUpVariants}
             custom={4}
           >
-            {isLoading ? (
+            {!isLoaded ? (
               <Skeleton className="h-[60px] w-[260px] rounded-2xl" />
-            ) : isAuthenticated ? (
+            ) : isSignedIn ? (
               <AnimatedCTAButton href="/dashboard">
                 <span className="flex items-center justify-center gap-3">
                   Go to Dashboard

@@ -1,7 +1,6 @@
 "use client";
 
-import { useAuthActions } from "@convex-dev/auth/react";
-import { useConvexAuth } from "convex/react";
+import { SignOutButton as ClerkSignOutButton, useUser } from "@clerk/nextjs";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -280,7 +279,7 @@ function MobileMenu({
                 </span>
                 <ThemeToggle />
               </div>
-              <SignOutButton onClose={onClose} />
+              <AuthButton onClose={onClose} />
             </motion.div>
           </motion.div>
         </>
@@ -390,20 +389,21 @@ function MobileNavLinks({ onClose }: { onClose: () => void }) {
   );
 }
 
-function SignOutButton({ onClose }: { onClose?: () => void }) {
-  const { signOut } = useAuthActions();
-  const { isAuthenticated } = useConvexAuth();
-  if (isAuthenticated) {
+function AuthButton({ onClose }: { onClose?: () => void }) {
+  const { isSignedIn } = useUser();
+
+  if (isSignedIn) {
     return (
-      <Button
-        className="mt-2 w-full"
-        onClick={() => {
-          signOut();
-          onClose?.();
-        }}
-      >
-        Sign out
-      </Button>
+      <ClerkSignOutButton>
+        <Button
+          className="mt-2 w-full"
+          onClick={() => {
+            onClose?.();
+          }}
+        >
+          Sign out
+        </Button>
+      </ClerkSignOutButton>
     );
   }
   return (
