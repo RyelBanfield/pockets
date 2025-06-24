@@ -38,12 +38,6 @@ http.route({
           data: event.data,
         });
         break;
-
-      case "user.deleted": {
-        const clerkUserId = event.data.id!;
-        await ctx.runMutation(internal.users.deleteFromClerk, { clerkUserId });
-        break;
-      }
       default:
         console.log("Ignored Clerk webhook event", event.type);
     }

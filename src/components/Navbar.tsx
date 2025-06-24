@@ -1,6 +1,10 @@
 "use client";
 
-import { SignOutButton as ClerkSignOutButton, useUser } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignOutButton as ClerkSignOutButton,
+  useUser,
+} from "@clerk/nextjs";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -408,9 +412,7 @@ function AuthButton({ onClose }: { onClose?: () => void }) {
   }
   return (
     <Button className="mt-2 w-full" asChild>
-      <Link href="/signin" onClick={onClose}>
-        Sign in
-      </Link>
+      <SignInButton mode="modal">Sign in</SignInButton>
     </Button>
   );
 }

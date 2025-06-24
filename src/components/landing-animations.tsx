@@ -60,33 +60,53 @@ export function AnimatedHeroBackground() {
 
 export function AnimatedCTAButton({
   children,
-  className,
-  ...props
-}: React.ComponentProps<"a">) {
-  return (
-    <motion.a
-      whileHover={{
-        scale: 1.06,
-        boxShadow: "0 8px 32px 0 rgba(99,102,241,0.15)",
-      }}
-      whileTap={{ scale: 0.96 }}
-      transition={{ type: "spring", stiffness: 200, damping: 12 }}
-      href={props.href}
-      target={props.target}
-      rel={props.rel}
-      className={
-        "group bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20 border-primary/20 [&_*]:!text-primary-foreground inline-flex items-center justify-center rounded-2xl border px-10 py-5 text-lg font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl " +
-        (className || "")
-      }
-      style={
-        {
-          color: "var(--primary-foreground)",
-        } as React.CSSProperties
-      }
-    >
+  className = "",
+  href,
+  onClick,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  href?: string;
+  onClick?: () => void;
+}) {
+  const baseClassName =
+    "group bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20 border-primary/20 [&_*]:!text-primary-foreground inline-flex items-center justify-center rounded-2xl border px-10 py-5 text-lg font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl " +
+    className;
+
+  const motionProps = {
+    whileHover: {
+      scale: 1.06,
+      boxShadow: "0 8px 32px 0 rgba(99,102,241,0.15)",
+    },
+    whileTap: { scale: 0.96 },
+    transition: { type: "spring" as const, stiffness: 200, damping: 12 },
+    className: baseClassName,
+    style: {
+      color: "var(--primary-foreground)",
+    } as React.CSSProperties,
+  };
+
+  const content = (
+    <>
       <div style={{ color: "inherit" }}>{children}</div>
       <span className="group-active:animate-ripple pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-active:opacity-30" />
-    </motion.a>
+    </>
+  );
+
+  // If href is provided, render as a link
+  if (href) {
+    return (
+      <motion.a {...motionProps} href={href}>
+        {content}
+      </motion.a>
+    );
+  }
+
+  // Otherwise render as a button (for use with Clerk components)
+  return (
+    <motion.button {...motionProps} onClick={onClick} type="button">
+      {content}
+    </motion.button>
   );
 }
 

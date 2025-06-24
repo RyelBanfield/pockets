@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { SignInButton, useUser } from "@clerk/nextjs";
 import { Heart, Target, Zap } from "lucide-react";
 import { motion, Variants } from "motion/react";
 
@@ -86,14 +86,16 @@ export default function Home() {
                 </span>
               </AnimatedCTAButton>
             ) : (
-              <AnimatedCTAButton href="/signin">
-                <span className="flex items-center justify-center gap-3">
-                  Start Our Journey
-                  <span className="text-xl transition-transform duration-200 group-hover:translate-x-1">
-                    →
+              <SignInButton mode="modal">
+                <AnimatedCTAButton>
+                  <span className="flex items-center justify-center gap-3">
+                    Start Our Journey
+                    <span className="text-xl transition-transform duration-200 group-hover:translate-x-1">
+                      →
+                    </span>
                   </span>
-                </span>
-              </AnimatedCTAButton>
+                </AnimatedCTAButton>
+              </SignInButton>
             )}
           </motion.div>
         </motion.div>
@@ -231,14 +233,16 @@ export default function Home() {
                 </span>
               </AnimatedCTAButton>
             ) : (
-              <AnimatedCTAButton href="/signin">
-                <span className="flex items-center justify-center gap-3">
-                  Start Building Together
-                  <span className="text-2xl transition-transform duration-200 group-hover:translate-x-1">
-                    →
+              <SignInButton mode="modal">
+                <AnimatedCTAButton>
+                  <span className="flex items-center justify-center gap-3">
+                    Start Building Together
+                    <span className="text-2xl transition-transform duration-200 group-hover:translate-x-1">
+                      →
+                    </span>
                   </span>
-                </span>
-              </AnimatedCTAButton>
+                </AnimatedCTAButton>
+              </SignInButton>
             )}
             <div className="text-muted-foreground text-sm">
               <div className="flex items-center justify-center gap-2">
