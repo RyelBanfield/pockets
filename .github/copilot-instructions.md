@@ -47,6 +47,7 @@
 - **Use the provided hooks and context providers for state and data access.**
 - **Do not modify files in `convex/_generated/`—these are auto-generated.**
 - **Use `pnpm` for dependency management if possible (see `pnpm-workspace.yaml`).**
+- **Always use arrow functions for React components (no function declarations).**
 
 ## Examples
 

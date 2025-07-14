@@ -2,20 +2,15 @@ import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 
 import ConvexClientProvider from "@/src/components/ConvexClientProvider";
 import Footer from "@/src/components/Footer";
 import Navbar from "@/src/components/Navbar";
 import { ThemeProvider } from "@/src/components/theme-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -28,35 +23,38 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <ClerkProvider>
-      <ConvexClientProvider>
-        <html lang="en" suppressHydrationWarning>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} from-background to-eggshell-700/20 dark:from-background dark:to-delft_blue-600/10 flex min-h-screen flex-col bg-gradient-to-br antialiased`}
-          >
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <header className="sticky top-0 z-50">
-                <Navbar />
-              </header>
-              <main className="flex-shrink-0 flex-grow pt-20">{children}</main>
-              <footer className="mt-auto">
-                <Footer />
-              </footer>
-            </ThemeProvider>
-          </body>
-        </html>
-      </ConvexClientProvider>
-    </ClerkProvider>
-  );
-}
+// Compose all providers in a single component for clarity
+const Providers = ({ children }: { children: React.ReactNode }) => (
+  <ClerkProvider>
+    <ConvexClientProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
+      </ThemeProvider>
+    </ConvexClientProvider>
+  </ClerkProvider>
+);
+
+const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
+  <html lang="en" suppressHydrationWarning>
+    <body
+      className={`${inter.className} from-background to-eggshell-700/20 dark:from-background dark:to-delft_blue-600/10 flex min-h-screen flex-col bg-gradient-to-br antialiased`}
+    >
+      <Providers>
+        <header className="sticky top-0 z-50">
+          <Navbar />
+        </header>
+        <main className="flex-shrink-0 flex-grow pt-20">{children}</main>
+        <footer className="mt-auto">
+          <Footer />
+        </footer>
+      </Providers>
+    </body>
+  </html>
+);
+
+export default RootLayout;
