@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 
 import ConvexClientProvider from "@/components/ConvexClientProvider";
 import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
