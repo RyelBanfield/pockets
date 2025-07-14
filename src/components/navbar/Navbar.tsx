@@ -5,12 +5,10 @@ import Link from "next/link";
 
 import ThemeToggle from "@/components/ThemeToggle";
 
-import {
-  HamburgerButton,
-  MobileMenu,
-  NavLinks,
-  useNavbar,
-} from "./navbar/index";
+import { HamburgerButton } from "./HamburgerButton";
+import { MobileMenu } from "./MobileMenu";
+import { NavLinks } from "./NavLinks";
+import { useNavbar } from "./useNavbar";
 
 /**
  * Responsive navigation bar for Pockets with animated hamburger menu.
