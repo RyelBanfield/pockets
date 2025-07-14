@@ -7,5 +7,14 @@ export const navigationLinks: NavigationLink[] = [
     label: "Dashboard",
     icon: "📊",
     description: "Your financial overview",
+    authOnly: true,
   },
+  // Add more links as needed, e.g.:
+  // {
+  //   href: "/about",
+  //   label: "About",
+  //   icon: "ℹ️",
+  //   description: "Learn more about Pockets",
+  //   authOnly: false,
+  // },
 ];

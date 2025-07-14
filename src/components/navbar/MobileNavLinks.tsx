@@ -1,5 +1,7 @@
 "use client";
 
+import { useUser } from "@clerk/nextjs";
+import { Lock } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 
@@ -14,6 +16,7 @@ interface MobileNavLinksProps {
  * Features large touch targets and smooth hover effects.
  */
 export const MobileNavLinks: React.FC<MobileNavLinksProps> = ({ onClose }) => {
+  const { isSignedIn } = useUser();
   const itemVariants = {
     open: {
       y: 0,
@@ -35,9 +38,31 @@ export const MobileNavLinks: React.FC<MobileNavLinksProps> = ({ onClose }) => {
     },
   };
 
+  // Only show links that are public or (if logged in) authOnly
+  const visibleLinks = navigationLinks.filter(
+    (link) => !link.authOnly || isSignedIn,
+  );
+
+  if (visibleLinks.length === 0) {
+    // Optionally show a message for logged-out users
+    return (
+      <div className="flex flex-col items-center justify-center py-12 text-center">
+        <div className="bg-muted mb-4 flex h-14 w-14 items-center justify-center rounded-full">
+          <Lock className="text-muted-foreground h-8 w-8" />
+        </div>
+        <div className="text-foreground mb-1 text-lg font-semibold">
+          You&apos;re not signed in
+        </div>
+        <div className="text-muted-foreground mb-2 text-base">
+          Sign in to access your dashboard and menu options.
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      {navigationLinks.map((link, index) => (
+      {visibleLinks.map((link, index) => (
         <motion.div key={link.href} variants={itemVariants} custom={index}>
           <Link
             href={link.href}

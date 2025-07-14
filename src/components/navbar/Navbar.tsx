@@ -1,9 +1,11 @@
 "use client";
 
+import { SignInButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
 import ThemeToggle from "@/components/ThemeToggle";
+import { Button } from "@/components/ui/button";
 
 import { HamburgerButton } from "./HamburgerButton";
 import { MobileMenu } from "./MobileMenu";
@@ -16,6 +18,7 @@ import { useNavbar } from "./useNavbar";
  */
 const Navbar: React.FC = () => {
   const { isMenuOpen, toggleMenu, closeMenu } = useNavbar();
+  const { isSignedIn } = useUser();
 
   return (
     <>
@@ -37,8 +40,13 @@ const Navbar: React.FC = () => {
           {/* Desktop navigation */}
           <div className="hidden items-center gap-1 md:flex">
             <NavLinks />
-            <div className="ml-4">
+            <div className="ml-4 flex items-center gap-2">
               <ThemeToggle />
+              {!isSignedIn && (
+                <SignInButton mode="modal">
+                  <Button variant="outline">Sign in</Button>
+                </SignInButton>
+              )}
             </div>
           </div>
 

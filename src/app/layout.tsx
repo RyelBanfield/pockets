@@ -48,7 +48,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
         <header className="sticky top-0 z-50">
           <Navbar />
         </header>
-        <main className="flex-shrink-0 flex-grow pt-20">{children}</main>
+        <main className="flex flex-shrink-0 flex-grow pt-20">{children}</main>
         <footer className="mt-auto">
           <Footer />
         </footer>
