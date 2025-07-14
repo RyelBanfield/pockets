@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "dev": "concurrently -k -n next,convex -c blue,green \"next dev --turbopack\" \"pnpm convex dev\"",
-    "lint": "pnpm prettier --write ./src && next lint --fix",
+    "lint": "pnpm prettier --write ./src && pnpm eslint ./src/ --fix && next lint",
     "start": "next start"
   },
   "dependencies": {
@@ -55,7 +55,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.60.0",
     "react-resizable-panels": "^3.0.3",
-    "recharts": "^3.1.0",
+    "recharts": "^2.15.4",
     "sonner": "^2.0.6",
     "svix": "^1.69.0",
     "tailwind-merge": "^3.3.1",

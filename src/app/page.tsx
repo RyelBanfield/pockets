@@ -7,9 +7,9 @@ import { motion, Variants } from "motion/react";
 import {
   AnimatedCTAButton,
   AnimatedHeroBackground,
-} from "@/src/components/landing-animations";
-import { Badge } from "@/src/components/ui/badge";
-import { Skeleton } from "@/src/components/ui/skeleton";
+} from "@/components/landing-animations";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   const { isSignedIn, isLoaded } = useUser();

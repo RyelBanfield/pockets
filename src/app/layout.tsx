@@ -4,10 +4,10 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import ConvexClientProvider from "@/src/components/ConvexClientProvider";
-import Footer from "@/src/components/Footer";
-import Navbar from "@/src/components/Navbar";
-import { ThemeProvider } from "@/src/components/theme-provider";
+import ConvexClientProvider from "@/components/ConvexClientProvider";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
   variable: "--font-inter",
