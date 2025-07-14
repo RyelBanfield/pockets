@@ -21,4 +21,13 @@ export default defineSchema({
   })
     .index("by_userA", ["userA"])
     .index("by_userB", ["userB"]),
+
+  pockets: defineTable({
+    label: v.string(),
+    description: v.optional(v.string()),
+    target: v.optional(v.number()),
+    value: v.number(),
+    userIds: v.array(v.id("users")), // Both partners' user IDs
+    createdBy: v.id("users"),
+  }).index("by_userIds", ["userIds"]),
 });
