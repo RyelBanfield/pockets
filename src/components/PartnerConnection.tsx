@@ -2,10 +2,8 @@
 
 import { useMutation, useQuery } from "convex/react";
 import { useState } from "react";
-
 import { api } from "@/../convex/_generated/api";
 import { Id } from "@/../convex/_generated/dataModel";
-
 import { Button } from "./ui/button";
 
 interface PartnerConnectionProps {
@@ -21,10 +19,12 @@ export const PartnerConnection = ({ userId }: PartnerConnectionProps) => {
   const [redeemError, setRedeemError] = useState("");
 
   // Fetch connection status
-  const connection = useQuery(api.invite.getConnectionForUser, { userId });
-  const inviteCode = useQuery(api.invite.getActiveInviteCode, { userId });
-  const generateInviteCode = useMutation(api.invite.generateInviteCodeForUser);
-  const redeemInviteCode = useMutation(api.invite.redeemInviteCode);
+  const connection = useQuery(api.couples.findByUserId, { userId });
+  const inviteCode = useQuery(api.inviteCodes.getActiveInviteCode, { userId });
+  const generateInviteCode = useMutation(
+    api.inviteCodes.generateInviteCodeForUser,
+  );
+  const redeemInviteCode = useMutation(api.inviteCodes.redeemInviteCode);
 
   const handleGenerate = async () => {
     if (connection) return;
@@ -88,7 +88,7 @@ export const PartnerConnection = ({ userId }: PartnerConnectionProps) => {
 
   return (
     <section
-      className="flex w-full flex-col gap-8 rounded-xl border border-gray-200 bg-white px-6 py-8 shadow-sm md:gap-10"
+      className="flex w-full flex-col gap-8 rounded-xl border border-gray-200 bg-white p-8 shadow-sm"
       aria-label="Partner Connection"
     >
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
