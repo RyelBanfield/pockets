@@ -16,7 +16,7 @@ import { useNavbar } from "./useNavbar";
  * Responsive navigation bar for Pockets with animated hamburger menu.
  * Features smooth animations, full accessibility, and mobile-first design.
  */
-const MainNavbar: React.FC = () => {
+const Navbar: React.FC = () => {
   const { isMenuOpen, toggleMenu, closeMenu } = useNavbar();
   const { isSignedIn } = useUser();
 
@@ -68,4 +68,4 @@ const MainNavbar: React.FC = () => {
   );
 };
 
-export default MainNavbar;
+export default Navbar;

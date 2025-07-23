@@ -7,14 +7,14 @@ import { motion, Variants } from "motion/react";
 import {
   AnimatedCTAButton,
   AnimatedHeroBackground,
-} from "@/components/landing-animations";
+  AnimatedFeatureCard,
+} from "@/components/ui/animated";
+
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function Home() {
+const Home = () => {
   const { isSignedIn, isLoaded } = useUser();
-
-  // Animation variants using best practices
   const fadeUpVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: (custom: number = 1) => ({
@@ -29,7 +29,6 @@ export default function Home() {
       <AnimatedHeroBackground />
       {/* Hero Section */}
       <section className="relative px-6 py-32 lg:px-8">
-        {/* removed overflow-hidden and background */}
         <AnimatedHeroBackground />
         <motion.div
           className="relative z-10 mx-auto max-w-5xl text-center"
@@ -137,21 +136,21 @@ export default function Home() {
             ></motion.div>
           </div>
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:gap-12">
-            <FeatureCard
+            <AnimatedFeatureCard
               icon={<Heart className="h-10 w-10" />}
               title="Complete Transparency"
               subtitle="See everything together"
               description="No more financial surprises. Every transaction, every goal, every decision—shared in real-time with complete clarity and trust."
               index={1}
             />
-            <FeatureCard
+            <AnimatedFeatureCard
               icon={<Target className="h-10 w-10" />}
               title="Unified Budgeting"
               subtitle="Plan your future as one"
               description="Set shared goals, track progress together, and make every dollar count toward the dreams you're building as a couple."
               index={2}
             />
-            <FeatureCard
+            <AnimatedFeatureCard
               icon={<Zap className="h-10 w-10" />}
               title="Instant Updates"
               subtitle="Always in sync"
@@ -169,7 +168,6 @@ export default function Home() {
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeUpVariants}
       >
-        {/* Subtle background pattern - unified with the main gradient */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.02]">
           <div
             className="text-muted-foreground absolute inset-0"
@@ -255,51 +253,6 @@ export default function Home() {
       </motion.section>
     </main>
   );
-}
+};
 
-// FeatureCard now animated and using variants
-function FeatureCard({
-  icon,
-  title,
-  subtitle,
-  description,
-  index = 1,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  subtitle?: string;
-  description: string;
-  index?: number;
-}) {
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: (custom: number = 1) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: 0.1 * custom, duration: 0.7, ease: "easeOut" },
-    }),
-  };
-  return (
-    <motion.div
-      className="bg-background/80 border-muted/30 rounded-3xl border p-6 text-center backdrop-blur-sm transition-all duration-500"
-      variants={cardVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      custom={index}
-    >
-      <div className="text-primary mb-4 flex justify-center">
-        <div className="bg-muted/20 rounded-2xl p-3">{icon}</div>
-      </div>
-      <h3 className="text-foreground mb-1 text-xl font-bold">{title}</h3>
-      {subtitle && (
-        <p className="text-primary mb-3 text-xs font-semibold tracking-wide uppercase">
-          {subtitle}
-        </p>
-      )}
-      <p className="text-muted-foreground text-base leading-relaxed">
-        {description}
-      </p>
-    </motion.div>
-  );
-}
+export default Home;

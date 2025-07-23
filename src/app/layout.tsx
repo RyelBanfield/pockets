@@ -1,13 +1,11 @@
 import "./globals.css";
 
-import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import ConvexClientProvider from "@/components/ConvexClientProvider";
-import Footer from "@/components/Footer";
+import Providers from "@/components/Providers";
 import Navbar from "@/components/navbar";
-import { ThemeProvider } from "@/components/theme-provider";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -22,22 +20,6 @@ export const metadata: Metadata = {
     icon: "/convex.svg",
   },
 };
-
-// Compose all providers in a single component for clarity
-const Providers = ({ children }: { children: React.ReactNode }) => (
-  <ClerkProvider>
-    <ConvexClientProvider>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        {children}
-      </ThemeProvider>
-    </ConvexClientProvider>
-  </ClerkProvider>
-);
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
   <html lang="en" suppressHydrationWarning>

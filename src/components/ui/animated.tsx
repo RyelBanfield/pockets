@@ -1,10 +1,11 @@
-import { motion, useInView } from "motion/react";
+import { motion, useInView, Variants } from "motion/react";
 import { useRef } from "react";
+import React from "react";
 
-// Use correct Easing type from motion/react
+// Easing for all animations
 const customEase = [0.16, 1, 0.3, 1] as const;
 
-export function AnimatedHeroBackground() {
+export const AnimatedHeroBackground = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.4 });
   const blobs = [
@@ -56,9 +57,9 @@ export function AnimatedHeroBackground() {
       ))}
     </div>
   );
-}
+};
 
-export function AnimatedCTAButton({
+export const AnimatedCTAButton = ({
   children,
   className = "",
   href,
@@ -68,7 +69,7 @@ export function AnimatedCTAButton({
   className?: string;
   href?: string;
   onClick?: () => void;
-}) {
+}) => {
   const baseClassName =
     "group bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20 border-primary/20 [&_*]:!text-primary-foreground inline-flex items-center justify-center rounded-2xl border px-10 py-5 text-lg font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl " +
     className;
@@ -93,7 +94,6 @@ export function AnimatedCTAButton({
     </>
   );
 
-  // If href is provided, render as a link
   if (href) {
     return (
       <motion.a {...motionProps} href={href}>
@@ -102,28 +102,31 @@ export function AnimatedCTAButton({
     );
   }
 
-  // Otherwise render as a button (for use with Clerk components)
   return (
     <motion.button {...motionProps} onClick={onClick} type="button">
       {content}
     </motion.button>
   );
-}
+};
 
-export function AnimatedFeatureCard({
-  icon,
-  title,
-  subtitle,
-  description,
-  index = 1,
-}: {
+export interface AnimatedFeatureCardProps {
   icon: React.ReactNode;
   title: string;
   subtitle?: string;
   description: string;
   index?: number;
-}) {
-  const cardVariants = {
+  variant?: "default" | "simple";
+}
+
+export const AnimatedFeatureCard: React.FC<AnimatedFeatureCardProps> = ({
+  icon,
+  title,
+  subtitle,
+  description,
+  index = 1,
+  variant = "default",
+}) => {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: (custom: number = 1) => ({
       opacity: 1,
@@ -135,6 +138,31 @@ export function AnimatedFeatureCard({
       },
     }),
   };
+  if (variant === "simple") {
+    return (
+      <motion.div
+        className="bg-background/80 border-muted/30 rounded-3xl border p-6 text-center backdrop-blur-sm transition-all duration-500"
+        variants={cardVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        custom={index}
+      >
+        <div className="text-primary mb-4 flex justify-center">
+          <div className="bg-muted/20 rounded-2xl p-3">{icon}</div>
+        </div>
+        <h3 className="text-foreground mb-1 text-xl font-bold">{title}</h3>
+        {subtitle && (
+          <p className="text-primary mb-3 text-xs font-semibold tracking-wide uppercase">
+            {subtitle}
+          </p>
+        )}
+        <p className="text-muted-foreground text-base leading-relaxed">
+          {description}
+        </p>
+      </motion.div>
+    );
+  }
   return (
     <motion.div
       className="group bg-card/50 border-border/50 hover:shadow-primary/8 hover:border-primary/30 hover:bg-card/80 relative rounded-3xl border p-10 text-center backdrop-blur-sm transition-all duration-500 hover:scale-[1.04] hover:shadow-2xl"
@@ -172,4 +200,4 @@ export function AnimatedFeatureCard({
       />
     </motion.div>
   );
-}
+};
